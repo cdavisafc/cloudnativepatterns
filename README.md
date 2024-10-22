@@ -8,3 +8,18 @@ That is to say, I have not fully committed to a second edition, but am seriously
 
 I'm not yet sure how much detail I'll put in the READMEs since the original repo was designed as a companion to the book, but I will capture instructions that differ from that in the book.
 
+## Setup
+
+The samples in this repo have been tested with:
+
+- Maven 3.9.9
+- Java 21
+- Spring Boot 3.3.4 (as spec'd in the poms)
+
+You'll also need:
+
+- git
+
+## A request....
+
+If you experience any issues with the samples herein, please reach out over social [LinkedIn](https://www.linkedin.com/in/corneliadavis/) and/or file an issue.

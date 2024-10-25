@@ -11,6 +11,7 @@
 	<modules>
 		<module>cloudnative-parent</module>
 		<module>cloudnative-requestresponse</module>
+		<module>cloudnative-eventdriven</module>
 	</modules>
 
 

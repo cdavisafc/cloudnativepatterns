@@ -8,10 +8,18 @@
 	<version>2.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
+	<parent>
+		<groupId>com.corneliadavis</groupId>
+		<artifactId>cloudnative-parent</artifactId>
+		<version>2.0-SNAPSHOT</version>
+		<relativePath>../cloudnative-parent</relativePath>
+	</parent>
+
 	<modules>
 		<module>cloudnative-parent</module>
 		<module>cloudnative-requestresponse</module>
 		<module>cloudnative-eventdriven</module>
+		<module>cloudnative-statelessness</module>
 	</modules>
 
 

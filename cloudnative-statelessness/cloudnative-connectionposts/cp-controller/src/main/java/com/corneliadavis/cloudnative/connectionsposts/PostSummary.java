@@ -1,20 +1,24 @@
 package com.corneliadavis.cloudnative.connectionsposts;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by corneliadavis on 9/4/17.
  */
-public class PostSummary {
+public class PostSummary implements Serializable {
 
     private Date date;
     private String usersname;
     private String title;
 
-    public PostSummary(String usersname, String title, Date date) {
-        this.date = date;
+    public PostSummary(String usersname, String title, Date date2) {
+        this.date = date2;
         this.usersname = usersname;
         this.title = title;
+    }
+
+    public PostSummary() {
     }
 
     public Date getDate() {

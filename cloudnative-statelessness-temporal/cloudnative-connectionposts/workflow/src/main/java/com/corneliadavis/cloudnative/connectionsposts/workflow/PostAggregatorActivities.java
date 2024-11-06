@@ -12,7 +12,7 @@ public interface PostAggregatorActivities {
     ConnectionResult[] getConnectionsForUser(String username);
 
     @ActivityMethod
-    ArrayList<PostSummary> getPostsForUsers(String ids);
+    PostResult[] getPostsForUsers(String ids);
 
     @ActivityMethod
     String getUsernameFromId(Long id);

@@ -33,19 +33,14 @@ public class PostAggregatorActivitiesImpl implements PostAggregatorActivities {
     }
 
     @Override
-    public ArrayList<PostSummary> getPostsForUsers(String ids) {
+    public PostResult[] getPostsForUsers(String ids) {
 
         RestTemplate restTemplate = new RestTemplate();
-        ArrayList<PostSummary> postSummaries = new ArrayList<PostSummary>();
 
         ResponseEntity<PostResult[]> respPosts = restTemplate.getForEntity(postsUrl + ids, PostResult[].class);
         PostResult[] posts = respPosts.getBody();
 
-        for (int i = 0; i < posts.length; i++)
-            postSummaries.add(new PostSummary(getUsernameFromId(posts[i].getUserId()), posts[i].getTitle(), posts[i].getDate()));
-
-
-        return postSummaries;
+        return posts;
     }
 
     @Override

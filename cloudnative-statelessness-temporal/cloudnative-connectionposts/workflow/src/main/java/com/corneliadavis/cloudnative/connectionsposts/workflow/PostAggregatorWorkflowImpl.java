@@ -98,12 +98,11 @@ public class PostAggregatorWorkflowImpl implements PostAggregatorWorkflow {
         logger.info(Utils.ipTag(ip, p) + "connection ids = " + ids);
 
         // get posts for those connections
-
-        postSummaries = aggregatorActivityStub.getPostsForUsers(ids);
-/*        logger.info(Utils.ipTag(ip, p) + "num Posts = " + posts.length);
+        PostResult[] posts = aggregatorActivityStub.getPostsForUsers(ids);
+/*        logger.info(Utils.ipTag(ip, p) + "num Posts = " + posts.length); */
         for (PostResult post : posts) {
             postSummaries.add(new PostSummary(aggregatorActivityStub.getUsernameFromId(post.getUserId()), post.getTitle(), post.getDate()));
-        }*/
+        }
 
         return postSummaries; 
     }

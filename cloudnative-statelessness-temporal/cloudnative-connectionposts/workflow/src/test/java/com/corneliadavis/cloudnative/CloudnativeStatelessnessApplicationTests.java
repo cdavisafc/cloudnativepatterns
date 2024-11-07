@@ -27,9 +27,9 @@ import jakarta.servlet.http.Cookie;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = PostAggregatorWorker.class)
 @TestPropertySource(properties = {
-        "newfromconnectionscontroller.connectionsUrl:http://localhost:8080/connections/",
-        "newfromconnectionscontroller.postsUrl:http://localhost:8080/posts?userIds=",
-        "newfromconnectionscontroller.usersUrl:http://localhost:8080/users/" })
+        "connectionscontroller.connectionsUrl:http://localhost:8080/connections/",
+        "connectionscontroller.postsUrl:http://localhost:8080/posts?userIds=",
+        "connectionscontroller.usersUrl:http://localhost:8080/users/" })
 @AutoConfigureMockMvc
 public class CloudnativeStatelessnessApplicationTests implements ApplicationContextAware {
 
@@ -40,8 +40,6 @@ public class CloudnativeStatelessnessApplicationTests implements ApplicationCont
         this.applicationContext = applicationContext;
     }
 
-    @Autowired
-    private MockMvc mockMvc;
 
     @Test
     public void contextLoads() {

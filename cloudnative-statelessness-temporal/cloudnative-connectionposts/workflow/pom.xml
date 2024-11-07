@@ -60,11 +60,11 @@
 
 
 
-		<!-- The following are used in tests -->
+		<!-- The following are used in tests 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
+		</dependency>-->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

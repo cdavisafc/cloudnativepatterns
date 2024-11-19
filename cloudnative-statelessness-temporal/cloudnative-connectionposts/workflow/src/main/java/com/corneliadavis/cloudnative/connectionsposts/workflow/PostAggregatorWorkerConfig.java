@@ -1,14 +1,11 @@
 package com.corneliadavis.cloudnative.connectionsposts.workflow;
 
-import com.corneliadavis.cloudnative.connectionsposts.shared.PostAggregatorWorkflow;
-import com.corneliadavis.cloudnative.connectionsposts.shared.Shared;
-
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.beans.factory.annotation.Value;
 
+import com.corneliadavis.cloudnative.connectionsposts.shared.Shared;
 
 import io.temporal.client.WorkflowClient;
 import io.temporal.serviceclient.WorkflowServiceStubs;
@@ -17,10 +14,6 @@ import io.temporal.worker.WorkerFactory;
 
 @Configuration
 public class PostAggregatorWorkerConfig {
-
-    // @Bean
-    // @Value("${connectionpostscontroller.connectionsUrl}")
-    // private String connectionsUrl;
 
     @Bean
     public WorkflowServiceStubs serviceStub() {
@@ -43,12 +36,7 @@ public class PostAggregatorWorkerConfig {
     }
 
     @Bean
-    public Worker worker(WorkerFactory factory, 
-                         @Value("${connectionpostscontroller.connectionsUrl}") String connectionsUrl,
-                         @Value("${connectionpostscontroller.postsUrl}") String postsUrl,
-                         @Value("${connectionpostscontroller.usersUrl}") String usersUrl,
-                         @Value("${INSTANCE_IP}") String ip,
-                         @Value("${INSTANCE_PORT}") String p) {
+    public Worker worker(WorkerFactory factory, PostAggregatorActivitiesImpl activitiesImpl) {
 
         // A Worker listens to one Task Queue.
         // This Worker processes both Workflows and Activities
@@ -62,7 +50,7 @@ public class PostAggregatorWorkerConfig {
         // Register Activity implementation(s) with this Worker.
         // The implementation must be known at runtime to dispatch Activity tasks
         // Activities are stateless and thread safe so a shared instance is used.
-        worker.registerActivitiesImplementations(new PostAggregatorActivitiesImpl(connectionsUrl, postsUrl, usersUrl, ip, p));
+        worker.registerActivitiesImplementations(activitiesImpl);
 
         return worker;
     }

@@ -1,13 +1,23 @@
 package com.corneliadavis.cloudnative.connectionsposts.eventhandlers;
 
-import com.corneliadavis.cloudnative.connections.Connection;
-import com.corneliadavis.cloudnative.connections.User;
-import com.corneliadavis.cloudnative.connectionsposts.localstorage.*;
-import com.corneliadavis.cloudnative.posts.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.corneliadavis.cloudnative.connections.Connection;
+import com.corneliadavis.cloudnative.connections.User;
+import com.corneliadavis.cloudnative.connectionsposts.localstorage.MConnection;
+import com.corneliadavis.cloudnative.connectionsposts.localstorage.MConnectionRepository;
+import com.corneliadavis.cloudnative.connectionsposts.localstorage.MPost;
+import com.corneliadavis.cloudnative.connectionsposts.localstorage.MPostRepository;
+import com.corneliadavis.cloudnative.connectionsposts.localstorage.MUser;
+import com.corneliadavis.cloudnative.connectionsposts.localstorage.MUserRepository;
+import com.corneliadavis.cloudnative.posts.Post;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -16,7 +26,7 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 
 @RestController
-@RequestMapping(value="/connectionsposts")
+@RequestMapping(value = "/connectionsposts")
 public class EventsController {
 
     private static final Logger logger = LoggerFactory.getLogger(EventsController.class);
@@ -26,15 +36,14 @@ public class EventsController {
 
     @Autowired
     public EventsController(MUserRepository mUserRepository,
-                            MConnectionRepository mConnectionRepository,
-                            MPostRepository mPostRepository) {
+            MConnectionRepository mConnectionRepository,
+            MPostRepository mPostRepository) {
         this.mUserRepository = mUserRepository;
         this.mConnectionRepository = mConnectionRepository;
         this.mPostRepository = mPostRepository;
     }
 
-
-    @RequestMapping(method = RequestMethod.POST, value="/users")
+    @RequestMapping(method = RequestMethod.POST, value = "/users")
     public void newUser(@RequestBody User newUser, HttpServletResponse response) {
 
         logger.info("[ConnectionsPosts] Creating new user with username " + newUser.getUsername());
@@ -42,9 +51,9 @@ public class EventsController {
 
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value="/users/{id}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/users/{id}")
     public void updateUser(@PathVariable("id") Long userId,
-                           @RequestBody User newUser, HttpServletResponse response) {
+            @RequestBody User newUser, HttpServletResponse response) {
 
         logger.info("Updating user with id " + userId);
         MUser mUser = mUserRepository.findById(userId).get();
@@ -52,13 +61,13 @@ public class EventsController {
 
     }
 
-    @RequestMapping(method = RequestMethod.POST, value="/connections")
+    @RequestMapping(method = RequestMethod.POST, value = "/connections")
     public void newConnection(@RequestBody Connection newConnection, HttpServletResponse response) {
 
         logger.info("Have a new connection: " + newConnection.getFollower() +
-                    " is following " + newConnection.getFollowed());
+                " is following " + newConnection.getFollowed());
         MConnection mConnection = new MConnection(newConnection.getId(), newConnection.getFollower(),
-                                                  newConnection.getFollowed());
+                newConnection.getFollowed());
         // add connection to the users
         MUser mUser;
         mUser = mUserRepository.findById(newConnection.getFollower()).get();
@@ -68,18 +77,18 @@ public class EventsController {
         mConnectionRepository.save(mConnection);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value="/connections/{id}")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/connections/{id}")
     public void deleteConnection(@PathVariable("id") Long connectionId, HttpServletResponse response) {
 
         MConnection mConnection = mConnectionRepository.findById(connectionId).get();
 
         logger.info("deleting connection: " + mConnection.getFollower() +
-                    " is no longer following " + mConnection.getFollowed());
+                " is no longer following " + mConnection.getFollowed());
         mConnectionRepository.delete(mConnection);
 
     }
 
-    @RequestMapping(method = RequestMethod.POST, value="/posts")
+    @RequestMapping(method = RequestMethod.POST, value = "/posts")
     public void newPost(@RequestBody Post newPost, HttpServletResponse response) {
 
         logger.info("Have a new post with title " + newPost.getTitle());

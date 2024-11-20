@@ -12,12 +12,13 @@ import jakarta.persistence.Id;
 public class Connection {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long follower;
     private Long followed;
 
-    protected Connection() {}
+    protected Connection() {
+    }
 
     public Connection(Long follower, Long followed) {
         this.follower = follower;
@@ -32,7 +33,7 @@ public class Connection {
         return follower;
     }
 
-   public Long getFollowed() {
+    public Long getFollowed() {
         return followed;
     }
 }

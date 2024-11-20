@@ -14,12 +14,13 @@ import jakarta.persistence.Table;
 public class User {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String username;
 
-    protected User() {}
+    protected User() {
+    }
 
     public User(String name, String username) {
         this.name = name;
@@ -30,7 +31,9 @@ public class User {
         return id;
     }
 
-    public void setId(Long id) { this.id = id; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

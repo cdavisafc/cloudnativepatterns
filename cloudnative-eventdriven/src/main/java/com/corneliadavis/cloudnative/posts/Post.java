@@ -1,10 +1,11 @@
 package com.corneliadavis.cloudnative.posts;
 
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.util.Date;
 
 /**
  * Created by corneliadavis on 9/4/17.
@@ -13,14 +14,15 @@ import java.util.Date;
 public class Post {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Date date;
     private Long userId;
     private String title;
     private String body;
 
-    protected Post() {}
+    protected Post() {
+    }
 
     public Post(Long userId, String title, String body) {
         this.date = new Date();
@@ -37,7 +39,9 @@ public class Post {
         return date;
     }
 
-    public void setDate(Date date) { this.date = date; }
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public Long getUserId() {
         return userId;

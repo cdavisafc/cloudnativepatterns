@@ -33,43 +33,54 @@ Additionally, you will need to do three things:
 
 1. Run a local Temporal dev service. You will need to install the Temporal cli and then run the following command:
 
-`temporal server start-dev`
+```
+temporal server start-dev
+```
 
 2. Run a local mysql instance and create the `cookbook` database. Running mysql locally is most easily done using docker.
 
-`docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -d mysql`
+```
+docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -d mysql
+```
 
 And then using a mysql client some some sort (I did `brew install mysql-client`), providing the password `password` when prompted:
 
-`mysql -h 127.0.0.1 -P 3306 -u root -p -e "create database testdb";` 
+```
+mysql -h 127.0.0.1 -P 3306 -u root -p -e "create database cookbook";
+``` 
 
 3. Run a local redis instance. This is easiest done using docker.
 
-`docker run --name redis -p 6379:6379 -d redis`
+```
+docker run --name redis -p 6379:6379 -d redis
+```
 
 ## Running the sample
 
 From within this directory:
 
-`mvn clean install`
+```
+mvn clean install
+```
 
 This will build four jar files, one for each of the connections and posts RESTful services, and two more for the the post aggregation service - one that runns the API endpoints and another for the Temporal worker that will run the workflow and activities. You can then run these jar files in four different terminal windows with the following commands:
 
 ```
 java -Dserver.port=8081 -Dspring.datasource.url=jdbc:mysql://localhost:3306/cookbook -jar cloudnative-posts/target/posts-2.0-SNAPSHOT.jar
-
+```
+```
 java -Dserver.port=8082 -Dspring.datasource.url=jdbc:mysql://localhost:3306/cookbook -jar cloudnative-connections/target/connections-2.0-SNAPSHOT.jar
-
+```
+```
 java -Dserver.port=8080 -jar cloudnative-connectionposts/controller/target/connectionposts-controller-2.0-SNAPSHOT.jar
-
+```
+```
 java -jar cloudnative-connectionposts/workflow/target/connectionposts-workflow-2.0-SNAPSHOT.jar
-
 ```
 
 Then when you run the following two commands, which log in a user with the username `cdavisafc` and then retrieves posts from authors followed by her, you can see log messages in each of the four windows. Of course, you'll also see the results of the connectionsposts service invocation.
 
 ```
 curl -X POST -i -c cookie localhost:8080/login?username=cdavisafc
-
 curl -i -b cookie localhost:8080/connectionsposts
 ```
